@@ -1,0 +1,8 @@
+<bx:import ortus.boxlang.runtime.BoxRuntime />
+<bx:import ortus.boxlang.runtime.scopes.Key />
+
+<bx:set datasourceService = BoxRuntime.getInstance().getDataSourceService() ></bx:set>
+
+<bx:loop collection="datasourceService.getNames()" item="name">
+	<h2>Datasource: #datasource.getUniqueName()#</h2>
+</bx:loop>

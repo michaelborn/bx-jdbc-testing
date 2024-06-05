@@ -1,0 +1,59 @@
+class{
+	this.name = "Foo";
+
+	this.datasources["derby"] = {
+		"driver": "derby",
+		"properties": {
+			"connectionString": "jdbc:derby:memory:testDB;create=true"
+		}
+	};
+
+	this.datasources["mysql"] = {
+		"driver": "mysql",
+		"host": "${env.MYSQL_HOST:localhost}",
+		"port": "${env.MYSQL_PORT:3306}",
+		"database": "${env.MYSQL_DATABASE:myDB}",
+		"username": "${env.MYSQL_USERNAME:root}",
+		"password": "123456Password",
+		"minConnections" : "11",
+		"maxConnections" : 100
+	};
+	this.datasources["mariadb"] = {
+		"driver": "mariadb",
+		"host": "${env.MARIADB_HOST:localhost}",
+		"port": "${env.MARIADB_PORT:3309}",
+		"database": "${env.MARIADB_DATABASE:myDB}",
+		"username": "${env.MARIADB_USERNAME:root}",
+		"password": "123456Password"
+	};
+	this.datasources["postgres"] = {
+		"driver": "postgresql",
+		"host": "${env.POSTGRES_HOST:localhost}",
+		"port": "${env.POSTGRES_PORT:5432}",
+		"database": "${env.POSTGRES_DATABASE:myDB}",
+		"username": "${env.POSTGRES_USERNAME:postgres}",
+		"password": "123456Password"
+	};
+	this.datasources["postgres"] = {
+		"driver": "postgresql",
+		"host": "${env.POSTGRES_HOST:localhost}",
+		"port": "${env.POSTGRES_PORT:5432}",
+		"database": "${env.POSTGRES_DATABASE:myDB}",
+		"username": "${env.POSTGRES_USERNAME:postgres}",
+		"password": "123456Password"
+	};
+	this.datasources["mssql"] = {
+		"driver": "mssql",
+		"host": "${env.MSSQL_HOST:localhost}",
+		"port": "${env.MSSQL_PORT:1433}",
+		"database": "${env.MSSQL_DATABASE:myDB}",
+		"username": "${env.MSSQL_USERNAME:sa}",
+		"password": "123456Password"
+	};
+	this.datasources["urlonly"] = {
+		"url" : "jdbc:mysql://${env.MYSQL_HOST:localhost}:${env.MYSQL_PORT:3306}/${env.MYSQL_DATABASE:myDB}",
+		"username": "${env.MYSQL_USERNAME:root}",
+		"password": "123456Password"
+	};
+
+}

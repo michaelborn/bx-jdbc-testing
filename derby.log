@@ -1,0 +1,13 @@
+----------------------------------------------------------------
+Sat May 25 06:28:24 EDT 2024:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.16.1.1 - (1901046): instance a816c00e-018f-af4b-6328-00000b59de88 
+on database directory memory:/home/michael/server/ortus/BoxLang/bxJDBCTest/testDB with class loader ortus.boxlang.runtime.loader.DynamicClassLoader@2dfaea86 
+Loaded from file:/home/michael/.boxlang/modules/bx-derby/libs/bx-derby-1.0.0-all.jar
+java.vendor=Private Build
+java.runtime.version=21.0.2+13-Ubuntu-120.04.1
+user.dir=/home/michael/server/ortus/BoxLang/bxJDBCTest
+os.name=Linux
+os.arch=amd64
+os.version=5.15.0-107-generic
+derby.system.home=null
+Database Class Loader started - derby.database.classpath=''
