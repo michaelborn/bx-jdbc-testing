@@ -1,0 +1,7 @@
+writeDump(
+    queryExecute(
+        "SELECT * FROM developers",
+        [],
+        { datasource: request.testDSN }
+    )
+);

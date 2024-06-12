@@ -1,0 +1,36 @@
+import ortus.boxlang.runtime.BoxRuntime;
+import ortus.boxlang.runtime.scopes.Key;
+
+datasourceService = BoxRuntime.getInstance().getDataSourceService();
+
+```
+<h4>Registered drivers:</h4>
+<bx:dump var="#datasourceService.getDriverNames()#" />
+
+<h4>Total registered datasources:</h4>
+<bx:dump var="#datasourceService.size()#" />
+
+<h4>Registered datasource names:</h4>
+<bx:dump var="#datasourceService.getNames()#" />
+
+<h4>Has MSSQL driver:</h4>
+<bx:dump var="#datasourceService.hasDriver( Key.of( 'mssql' ) )#" />
+<bx:dump var="#datasourceService.hasDriver( Key.of( 'MSSQL' ) )#" />
+<bx:dump var="#datasourceService.hasDriver( Key.of( 'MicrosoftSQL' ) )#" />
+```
+
+for( name in datasourceService.getNames() ){
+	datasource = datasourceService.get( Key.of( name ) );
+	writeOutput( '<h2>Datasource: #datasource.getUniqueName()#</h2>' );
+	writeDump( datasource.getPoolStats() );
+}
+
+/*
+randomDS = datasourceService.get( Key.of( "bx_unamed_ef2bcb40-576d-4ba1-8c5e-db478630d977_300265895" ) );
+writeDump( randomDS.getConfiguration() );
+writeDump( randomDS.getConfiguration().toStruct() );
+writeDump( randomDS.getConfiguration().properties );
+writeDump( jsonSerialize( randomDS.getConfiguration().properties ) );
+writeDump( hash( jsonSerialize( randomDS.getConfiguration().properties ) ) );
+// writeDump( randomDS   );
+*/

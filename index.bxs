@@ -1,42 +1,33 @@
-// variables.testDSN = "myDerby";
-// variables.testDSN = "myMysql";
-// variables.testDSN = "derby";
-variables.testDSN = "mysql";
-// variables.testDSN = "mariadb";
-// variables.testDSN = "postgres";
-// variables.testDSN = "mssql";
-// variables.testDSN = "urlonly";
-
 variables.drop = queryExecute(
 	"DROP TABLE IF EXISTS developers",
 	[],
-	{ datasource: variables.testDSN }
+	{ datasource: request.testDSN }
 );
 writeDump( var = variables.drop, label = "drop" );
 variables.creation = queryExecute(
 	"CREATE TABLE developers ( id INTEGER, name VARCHAR(155), role VARCHAR(155) )",
 	[],
-	{ datasource: variables.testDSN }
+	{ datasource: request.testDSN }
 );
 writeDump( var = variables.creation, label = "creation" );
 
 variables.structparams = queryExecute(
 	"INSERT INTO developers ( id, name, role ) VALUES ( :id, :name, :role )",
 	{ id : { value : 77, cfsqltype : "cf_sql_integer" }, name : "Michael Born", role : "Developer" },
-	{ "datasource": variables.testDSN }
+	{ "datasource": request.testDSN }
 );
 writeDump( var = variables.structparams, label = "structparams" );
 variables.arrayparams = queryExecute(
 	"INSERT INTO developers ( id, name, role ) VALUES ( ?, ?, ? ),( ?, ?, ? )",
 	[ { value : 77, sqltype : "integer" }, "Jon Clausen", "Engineer", { value : 81, sqltype : "cf_SQL_integer" }, "Eric Peterson", "Engineer"],
-	{ "datasource": variables.testDSN }
+	{ "datasource": request.testDSN }
 );
 writeDump( var = variables.arrayparams, label = "arrayparams" );
 
 variables.selection = queryExecute(
 	"SELECT * FROM developers",
 	[],
-	{ datasource: variables.testDSN }
+	{ datasource: request.testDSN }
 );
 
 writeDump( var = variables.selection, label = "selection" );
@@ -45,7 +36,7 @@ writeDump( var = variables.selection, label = "selection" );
 result = queryExecute( "
 	insert into developers (id, name) OUTPUT INSERTED.*
 	VALUES (1, 'Luis'), (2, 'Brad'), (3, 'Jon')
-",{},{ datasource: variables.testDSN } );
+",{},{ datasource: request.testDSN } );
 writeDump( result );
 
 
@@ -53,5 +44,5 @@ writeDump( result );
 variables.arrayparams = queryExecute(
 	"INSERT INTO developers ( id, name, role ) VALUES ( ?, ?, ? ),( ?, ?, ? )",
 	[ { value : 77, cfsqltype : "integer" }, "Jon Clausen", "Engineer", { value : 81, cfsqltype : "cf_SQL_integer" }, "Eric Peterson", "Engineer"],
-	{ "datasource": variables.testDSN }
+	{ "datasource": request.testDSN }
 );

@@ -1,10 +1,8 @@
-variables.testDSN = "application.bx.postgres";
-
-transaction datasource="#variables.testDSN#"{
+transaction datasource="#request.testDSN#"{
 	variables.structparams = queryExecute(
 		"INSERT INTO developers ( id, name, role ) VALUES ( :id, :name, :role )",
 		{ id : { value : 77, sqltype : "integer" }, name : "Michael Born", role : "Developer" },
-		{ "datasource": variables.testDSN }
+		{ "datasource": request.testDSN }
 	);
 	transactionRollback();
 }
@@ -13,6 +11,6 @@ writeDump(
 	queryExecute(
 		"SELECT * FROM developers",
 		[],
-		{ datasource: variables.testDSN }
+		{ datasource: request.testDSN }
 	)
 );
