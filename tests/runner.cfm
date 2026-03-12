@@ -23,4 +23,8 @@
 <!--- <cfparam name="url.isBatched"						default="false"> --->
 
 <!--- Include the TestBox HTML Runner --->
-<cfinclude template="/testbox/system/runners/HTMLRunner.cfm" >
+<cfset runnerPath = "/testbox/system/runners/HTMLRunner.cfm" >
+<cfif server.keyExists( "boxlang" )>
+    <cfset runnerPath = "../#runnerPath#" >
+</cfif>
+<cfinclude template="#runnerPath#" >

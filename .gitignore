@@ -1,4 +1,5 @@
 # Boxlang jars and binaries
+bx-*
 resources/libs/
 bin/
 lib/
