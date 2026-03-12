@@ -2,9 +2,9 @@
     "app":{
         "cfengine":"adobe@2021"
     },
-    "name":"bx-jdbc-testing-ACF",
+    "name":"bxJDBCTestingACF",
     "scripts":{
-        "onServerInstall":"cfpm install derby,sqlserver,administrator"
+        "onServerInstall":"cfpm install derby,sqlserver,mysql,orm,postgresql,administrator"
     },
     "web":{
         "HTTP":{
