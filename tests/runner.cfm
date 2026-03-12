@@ -13,8 +13,8 @@
 <cfparam name="url.bundlesPattern" 		default="*Spec*.cfc|*Test*.cfc|*Spec*.bx|*Test*.bx">
 
 <!--- Code Coverage requires FusionReactor --->
-<cfparam name="url.coverageEnabled"					default="true">
-<cfparam name="url.coveragePathToCapture"			default="#expandPath( '/root' )#">
+<cfparam name="url.coverageEnabled"					default="false">
+<cfparam name="url.coveragePathToCapture"			default="#expandPath( '/tests' )#">
 <cfparam name="url.coverageWhitelist"				default="">
 <cfparam name="url.coverageBlacklist"				default="/testbox,/coldbox,/tests,/modules,Application.cfc,/index.cfm,Application.bx,/index.bxm">
 <!---<cfparam name="url.coverageBrowserOutputDir"		default="#expandPath( '/tests/results/coverageReport' )#">--->
