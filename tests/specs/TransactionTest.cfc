@@ -163,7 +163,7 @@ component extends="BaseTest" {
 				 * Adobe:
 				 * 	rolls back the outer transaction, EVEN THOUGH NESTED TRANSACTIONS ARE SUPPOSED TO BE SUPPORTED. This is a known issue/quirk in Adobe ColdFusion's implementation of nested transactions. When you call transactionRollback() within a nested transaction, it rolls back the entire transaction, including the outer transaction, instead of just rolling back to the savepoint or affecting only the inner transaction.
 				 * 
-				 * Lucee: rolls back the outer transaction
+				 * Lucee: rolls back the outer transaction, because nested transactions are not supported. (The nested transaction block is essentially ignored, so the transactionRollback() call rolls back the entire transaction.)
 				 * 
 				 * BoxLang: Does not throw.
 				*/
@@ -174,9 +174,9 @@ component extends="BaseTest" {
 							{ id : { value : 77, sqltype : "integer" }, name : "Michael Born", role : "Developer" },
 							{ datasource: variables.testDSN }
 						);
-						transactionSetSavepoint( "foo" );
 
 						transaction{
+							queryExecute( "INSERT INTO developers ( id, name, role ) VALUES ( 33, 'Jon Clausen', 'Developer' )", {}, { datasource: variables.testDSN } );
 							transactionRollback();
 						}
 					}

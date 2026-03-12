@@ -1,14 +1,17 @@
 {
     "app":{
-        "cfengine":"adobe@2021"
+        "cfengine":"adobe@2025"
     },
-    "name":"bxJDBCTestingACF2021",
+    "JVM":{
+        "javaVersion":"openjdk21"
+    },
+    "name":"bxJDBCTestingACF2025",
     "scripts":{
         "onServerInstall":"cfpm install derby,sqlserver,mysql,orm,postgresql,administrator"
     },
     "web":{
         "HTTP":{
-            "port":"35807"
+            "port":"35889"
         }
     }
 }
