@@ -3,3 +3,8 @@ resources/libs/
 bin/
 lib/
 grapher
+derby.log
+
+# Test stuff
+testbox
+tests/results/
