@@ -17,8 +17,8 @@ docker-compose up --build -d
 ```
 
 Services:
-- **MariaDB** (port 3309)
-- **MySQL 5** (port 3306)
+- **MariaDB** (port 3360)
+- **MySQL 5** (port 3630)
 - **PostgreSQL 11** (port 5432)
 - **MSSQL 2019** (port 1433)
 

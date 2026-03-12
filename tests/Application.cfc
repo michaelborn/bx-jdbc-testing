@@ -5,16 +5,13 @@
  */
 component {
 
-	this.name              = "A TestBox Runner Suite";
-	// any other application.cfc stuff goes below:
+	this.name              = "bx-jdbc-testing TestBox Suite";
 	this.sessionManagement = true;
 
-	// any mappings go here, we create one that points to the root called test.
+	// Mappings
 	this.mappings[ "/tests" ] = getDirectoryFromPath( getCurrentTemplatePath() );
+	this.mappings[ "/testbox" ] = expandPath( "../testbox" );
 
-	// any orm definitions go here.
-
-	// request start
 	public boolean function onRequestStart( String targetPage ){
 		return true;
 	}

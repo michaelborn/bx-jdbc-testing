@@ -1,6 +1,0 @@
-// Let's test the `cfsqltype` attribute with the bx-compat module installed:
-variables.arrayparams = queryExecute(
-	"INSERT INTO developers ( id, name, role ) VALUES ( ?, ?, ? ),( ?, ?, ? )",
-	[ { value : 77, cfsqltype : "integer" }, "Jon Clausen", "Engineer", { value : 81, cfsqltype : "cf_SQL_integer" }, "Eric Peterson", "Engineer"],
-	{ "datasource": request.testDSN }
-);

@@ -5,8 +5,6 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: ${MARIADB_PASSWORD}
       MYSQL_DATABASE: ${MARIADB_DATABASE}
-      # MYSQL_USER: myuser
-      # MYSQL_PASSWORD: mypassword
     # volumes:
     #   - ./data:/var/lib/mysql
     ports:

@@ -1,0 +1,76 @@
+component extends="BaseTest" {{
+
+	variables.testDSN = "derby";
+	function beforeAll(){}
+
+	function run(){
+
+		describe(
+			title = "modern caching with cache attribute", 
+			body = () => {
+			afterEach( resetTestDB );
+
+			it( "can cache query results with cache=true", function(){
+				var queryMeta = {};
+				var result = queryExecute(
+					"SELECT 1, CURRENT_TIMESTAMP AS CurrentDateTime FROM SYSIBM.SYSDUMMY1",
+					{},
+					{ datasource = variables.testDSN, cache = true, cacheTimeout = createTimeSpan(0,0,5,0), result = "queryMeta" }
+				);
+
+				expect( queryMeta.cached ).toBeTrue();
+				expect( result.recordCount ).toBe( 1 );
+			});
+
+			it( "can retrieve cached results on subsequent calls", function(){
+				var queryMeta = {};
+				var firstResult = queryExecute(
+					"SELECT 1, CURRENT_TIMESTAMP AS CurrentDateTime FROM SYSIBM.SYSDUMMY1",
+					{},
+					{ datasource = variables.testDSN, cache = true, cacheTimeout = createTimeSpan(0,0,5,0), result = "queryMeta" }
+				);
+				var firstCached = queryMeta.cached;
+
+				sleep( 1000 );
+
+				var secondResult = queryExecute(
+					"SELECT 1, CURRENT_TIMESTAMP AS CurrentDateTime FROM SYSIBM.SYSDUMMY1",
+					{},
+					{ datasource = variables.testDSN, cache = true, cacheTimeout = createTimeSpan(0,0,5,0), result = "queryMeta" }
+				);
+				var secondCached = queryMeta.cached;
+
+				expect( firstCached ).toBeTrue();
+				expect( secondCached ).toBeTrue();
+			});
+
+			it( "sets cacheTimeout correctly", function(){
+				var queryMeta = {};
+				queryExecute(
+					"SELECT 1, CURRENT_TIMESTAMP AS CurrentDateTime FROM SYSIBM.SYSDUMMY1",
+					{},
+					{ datasource = variables.testDSN, cache = true, cacheTimeout = createTimeSpan(0,0,5,0), result = "queryMeta" }
+				);
+
+				expect( queryMeta.cacheTimeout ).toBeTypeOf( "date" );
+			});
+
+			it( "creates cache keys with BL_QUERY prefix", function(){
+				var queryMeta = {};
+				queryExecute(
+					"SELECT 1, CURRENT_TIMESTAMP AS CurrentDateTime FROM SYSIBM.SYSDUMMY1",
+					{},
+					{ datasource = variables.testDSN, cache = true, cacheTimeout = createTimeSpan(0,0,5,0), result = "queryMeta" }
+				);
+
+				var cacheKeys = getBoxCache().getKeys( key -> key.getName().startsWith( "BL_QUERY" ) );
+				expect( arrayLen( cacheKeys ) ).toBeGT( 0 );
+			});
+
+		},
+		skip = server.containsKey( "lucee" )
+		);
+
+	}
+
+}

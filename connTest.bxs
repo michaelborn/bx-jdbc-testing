@@ -1,7 +1,0 @@
-writeDump(
-	queryExecute(
-		"SELECT * FROM information_schema.PROCESSLIST;",
-		[],
-		{ datasource: request.testDSN }
-	)
-);
