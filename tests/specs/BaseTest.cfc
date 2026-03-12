@@ -24,6 +24,11 @@ component extends="testbox.system.BaseSpec" {
 			{ datasource: variables.testDSN }
 		);
 		queryExecute(
+			"DROP TABLE IF EXISTS foo",
+			[],
+			{ datasource: variables.testDSN }
+		);
+		queryExecute(
 			"CREATE TABLE developers ( id INTEGER, name VARCHAR(155), role VARCHAR(155) )",
 			[],
 			{ datasource: variables.testDSN }

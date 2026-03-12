@@ -1,7 +1,9 @@
-component extends="BaseTest" {{
+class extends="BaseTest" {
 
 	variables.testDSN = "derby";
-	function beforeAll(){}
+	function beforeAll(){
+		super.beforeAll();
+	}
 
 	function run(){
 

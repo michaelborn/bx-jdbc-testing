@@ -1,7 +1,9 @@
 component extends="BaseTest" {
 
 	variables.testDSN = "mysql";
-	function beforeAll(){}
+	function beforeAll(){
+		super.beforeAll();
+	}
 
 	function run(){
 

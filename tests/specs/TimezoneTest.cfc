@@ -1,7 +1,9 @@
 component extends="BaseTest" {
 
 	variables.testDSN = "mssql";
-	function beforeAll(){}
+	function beforeAll(){
+		super.beforeAll();
+	}
 
 	function run(){
 
@@ -35,7 +37,7 @@ component extends="BaseTest" {
 			it( "can insert with timezone parameter and timestamp", function(){
 				var uuid = createUUID();
 				var result = queryExecute(
-					"INSERT INTO myDB.dbo.foo (id, createdAt) VALUES ( :id, :createdAt )",
+					"INSERT INTO foo (id, createdAt) VALUES ( :id, :createdAt )",
 					{
 						id: { value: uuid, cfsqltype: "cf_sql_varchar" },
 						createdAt: { value: now(), cfsqltype: "cf_sql_timestamp" }
@@ -45,7 +47,7 @@ component extends="BaseTest" {
 
 				// Verify the insert worked
 				var verification = queryExecute(
-					"SELECT * FROM myDB.dbo.foo WHERE id = :id",
+					"SELECT * FROM foo WHERE id = :id",
 					{ id: uuid },
 					{ datasource: variables.testDSN }
 				);
