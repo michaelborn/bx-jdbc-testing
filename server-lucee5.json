@@ -1,0 +1,11 @@
+{
+    "name":"bxJDBCTestingLucee",
+    "app":{
+        "cfengine":"lucee@5"
+    },
+    "web":{
+        "HTTP":{
+            "port":"34395"
+        }
+    }
+}

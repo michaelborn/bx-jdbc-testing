@@ -1,7 +1,16 @@
-writeDump(
-    queryExecute(
-        "SELECT * FROM developers",
-        [],
-        { datasource: request.testDSN }
-    )
+queryExecute(
+	"INSERT INTO developers ( id, name, role ) VALUES ( :id, :name, :role )",
+	{ id : { value : 99, cfsqltype : "cf_sql_integer" }, name : "Michael Whomever", role : { nulls: true } },
+	{ "datasource": request.testDSN }
+);
+data = queryExecute(
+    "SELECT * FROM developers WHERE id=99",
+    [],
+    { datasource: request.testDSN }
+);
+writeOutput(
+    isNull( data.role )
+);
+writeOutput(
+    data.role == ""
 );

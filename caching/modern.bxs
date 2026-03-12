@@ -1,0 +1,26 @@
+request.testDSN = "derby";
+param variables.queryMeta = {};
+runQuery = function(){
+    var result = queryExecute(
+        // mssql:
+        // "SELECT 1, GETDATE() AS CurrentDateTime",
+        // Derby:
+        "SELECT 1, CURRENT_TIMESTAMP AS CurrentDateTime FROM SYSIBM.SYSDUMMY1",
+        {},
+        { datasource : request.testDSN, cache: true, cacheTimeout: createTimeSpan(0,0,5,0), result : "variables.queryMeta" }
+    );
+    return result;
+};
+
+runQuery();
+writeDump( variables.queryMeta.cached );
+writeDump( variables.queryMeta.cacheTimeout );
+sleep( 1000 );
+runQuery();
+writeDump( variables.queryMeta.cached );
+writeDump( variables.queryMeta.cacheTimeout );
+
+writeDump(
+    getBoxCache()
+        .getKeys( key-> key.getName().startsWith( "BL_QUERY" ) )
+);

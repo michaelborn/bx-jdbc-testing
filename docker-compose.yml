@@ -30,16 +30,13 @@ services:
       - "${POSTGRES_PORT}:5432"
     
   mssql:
-    image: mcr.microsoft.com/mssql/server:2017-latest
+    image: mcr.microsoft.com/mssql/server:2019-latest
     environment:
       MSSQL_SA_PASSWORD: ${MSSQL_PASSWORD}
       ACCEPT_EULA: "Y"
       MSSQL_PID: "Developer"
-    # volumes:
-    #   - ./build/docker/mssql:/docker-entrypoint-initdb.d
     ports:
       - "${MSSQL_PORT}:1433"
-    # entrypoint: /docker-entrypoint-initdb.d/entrypoint.sh /opt/mssql/bin/sqlservr
 
   # TODO: Re-enable when MongoDB testing is fixed in Lucee 6
   # mongo:

@@ -1,0 +1,14 @@
+{
+    "app":{
+        "cfengine":"adobe@2021"
+    },
+    "name":"bx-jdbc-testing-ACF",
+    "scripts":{
+        "onServerInstall":"cfpm install derby,sqlserver,administrator"
+    },
+    "web":{
+        "HTTP":{
+            "port":"35807"
+        }
+    }
+}

@@ -1,0 +1,14 @@
+{
+    "name":"bxJDBCTestingBoxlang",
+    "app":{
+        "cfengine":"boxlang"
+    },
+    "web":{
+        "HTTP":{
+            "port":"34396"
+        }
+    },
+    "scripts":{
+        "onServerInitialInstall":"install bx-derby,bx-mysql,bx-mssql,bx-oracle,bx-postgres"
+    }
+}
