@@ -1,6 +1,5 @@
 component extends="BaseTest" {
 
-	variables.testDSN = "mssql";
 	function beforeAll(){
 		super.beforeAll();
 	}
@@ -161,13 +160,13 @@ component extends="BaseTest" {
 
 				/**
 				 * Adobe:
-				 * 	rolls back the outer transaction, EVEN THOUGH NESTED TRANSACTIONS ARE SUPPOSED TO BE SUPPORTED. This is a known issue/quirk in Adobe ColdFusion's implementation of nested transactions. When you call transactionRollback() within a nested transaction, it rolls back the entire transaction, including the outer transaction, instead of just rolling back to the savepoint or affecting only the inner transaction.
+				 * 	rolls back the outer transaction, EVEN THOUGH NESTED TRANSACTIONS ARE SUPPOSED TO BE SUPPORTED. TransactionRollback() within a nested transaction rolls back the entire transaction, including the outer transaction, instead of just rolling back to the savepoint or affecting only the inner transaction.
 				 * 
 				 * Lucee: rolls back the outer transaction, because nested transactions are not supported. (The nested transaction block is essentially ignored, so the transactionRollback() call rolls back the entire transaction.)
 				 * 
-				 * BoxLang: Does not throw.
+				 * BoxLang: Rolls back the inner transaction only using an internal named savepoint.
 				*/
-				it( "nested transaction rollback should not roll back parent", function(){
+				it( "ACF and Lucee: nested transaction rollback also rolls back parent", function(){
 					transaction{
 						queryExecute(
 							"INSERT INTO developers ( id, name, role ) VALUES ( :id, :name, :role )",
@@ -189,7 +188,47 @@ component extends="BaseTest" {
 
 					// In Lucee and Adobe, this will be 0 (full rollback)
 					// In BoxLang, this is different
-					expect( result.recordCount ).toBeTypeOf( "numeric" ).toBe( 1, "inserted row should persist despite child transaction rollback." );
+					expect( result.recordCount ).toBeTypeOf( "numeric" ).toBe( 0, "in ACF and Lucee, inserted row does is rolled back, not persisted." );
+				});
+				/**
+				 * Adobe: commits parent from nested transaction commit. Rollback does not undo the commit from the inner transaction, so both inserts are committed to the database.
+				 * Lucee: commits parent from nested transaction commit, same as ACF.
+				 * Boxlang: Treats nested transaction commit as a savepoint, not a full commit, so it does not commit the outer transaction. The inner transaction's commit just releases the savepoint, but the outer transaction is still active and can be rolled back. In this case, the transactionRollback() call rolls back the entire transaction, including the insert from the inner transaction, so neither insert is committed to the database.
+				 */
+				it( "ACF and Lucee: nested transaction commit also commits parent", function(){
+					transaction{
+						queryExecute(
+							"INSERT INTO developers ( id, name, role ) VALUES ( 22, 'Brad Wood', 'Developer' )",
+							{},
+							{ datasource: variables.testDSN }
+						);
+						transaction{
+							queryExecute(
+								"INSERT INTO developers ( id, name, role ) VALUES ( 33, 'Jon Clausen', 'Developer' )",
+								{},
+								{ datasource: variables.testDSN }
+							);
+							transactionCommit();
+						}
+						// this should not roll back the transaction because the entire transaction has already been committed
+						transactionRollback();
+					}
+					var brad = queryExecute(
+						"SELECT * FROM developers WHERE id=22",
+						{},
+						{ datasource: variables.testDSN }
+					);
+					var jon = queryExecute(
+						"SELECT * FROM developers WHERE id=33",
+						{},
+						{ datasource: variables.testDSN }
+					);
+
+					// This insert from the outer transaction should have been committed by the inner transaction's commit
+					expect( brad.recordCount ).toBe( 1 );
+
+					// This insert from the inner transaction should have been committed
+					expect( jon.recordCount ).toBe( 1 );
 				});
 
 				/**
@@ -201,7 +240,7 @@ component extends="BaseTest" {
 				 * 
 				 * BoxLang: Does not throw.
 				*/
-				it( "throws when isolation level changes in a nested transaction", function(){
+				it( "ACF: throws when isolation level changes in a nested transaction", function(){
 					expect( function(){
 						transaction isolation = "repeatable_read" {
 							queryExecute(

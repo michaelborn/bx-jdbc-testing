@@ -10,7 +10,7 @@ component {
 
 	// Mappings
 	this.mappings[ "/tests" ] = getDirectoryFromPath( getCurrentTemplatePath() );
-	this.mappings[ "/testbox" ] = expandPath( "../testbox" );
+	this.mappings[ "/testbox" ] = this.mappings[ "/tests" ] & "testbox";
 	// debugging boxlang /testbox file inclusion error madness
 	// writeDump( this.mappings );
 	// writeDump( expandPath( "/testbox" ) );

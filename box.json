@@ -19,6 +19,6 @@
         "bx-mysql":"bx-mysql/",
         "bx-oracle":"bx-oracle/",
         "bx-postgresql":"bx-postgresql/",
-        "testbox":"testbox/"
+        "testbox":"tests/testbox/"
     }
 }
