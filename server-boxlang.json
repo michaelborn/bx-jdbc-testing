@@ -8,6 +8,9 @@
             "port":"34396"
         }
     },
+    "env":{
+        "BOXLANG_DEBUG":true
+    },
     "scripts":{
         "onServerInitialInstall":"install bx-derby,bx-mysql,bx-mssql,bx-postgresql,bx-compat-cfml"
     },

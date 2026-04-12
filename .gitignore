@@ -5,6 +5,7 @@ bin/
 lib/
 grapher
 derby.log
+modules/
 
 # Test stuff
 testbox
