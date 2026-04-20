@@ -12,7 +12,7 @@
         "BOXLANG_DEBUG":true
     },
     "scripts":{
-        "onServerInitialInstall":"install bx-derby,bx-mysql,bx-mssql,bx-postgresql,bx-compat-cfml"
+        "onServerInitialInstall":"install bx-orm,bx-derby,bx-mysql,bx-mssql,bx-postgresql,bx-compat-cfml"
     },
     "JVM":{
         "javaVersion":"openjdk21"

@@ -1,5 +1,8 @@
 {
     "name":"bxJDBCTestingLucee6",
+    "env":{
+        "LUCEE_EXTENSIONS":"D062D72F-F8A2-46F0-8CBC91325B2F067B;label=Ortus ORM Extension;version=6.5.2"
+    },
     "app":{
         "cfengine":"lucee@6"
     },
