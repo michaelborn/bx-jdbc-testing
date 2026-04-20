@@ -1,24 +1,12 @@
 {
     "dependencies":{
-        "bx-derby":"^1.0.0-SNAPSHOT",
-        "bx-hypersql":"^1.0.0-SNAPSHOT",
-        "bx-mariadb":"^1.0.0-SNAPSHOT",
-        "bx-mssql":"^1.0.0-SNAPSHOT",
-        "bx-mysql":"^1.0.0-SNAPSHOT",
-        "bx-oracle":"^1.0.0-SNAPSHOT",
-        "bx-postgresql":"^1.0.0-SNAPSHOT"
+        "cborm":"^4.12.1+10"
     },
     "devDependencies":{
-        "testbox":"^6.5.0+18"
+        "testbox":"7"
     },
     "installPaths":{
-        "bx-derby":"bx-derby/",
-        "bx-hypersql":"bx-hypersql/",
-        "bx-mariadb":"bx-mariadb/",
-        "bx-mssql":"bx-mssql/",
-        "bx-mysql":"bx-mysql/",
-        "bx-oracle":"bx-oracle/",
-        "bx-postgresql":"bx-postgresql/",
+        "cborm":"modules/cborm/",
         "testbox":"tests/testbox/"
     }
 }
