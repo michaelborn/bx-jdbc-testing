@@ -154,7 +154,36 @@ component extends="BaseTest" {
 
 				expect( result.recordCount ).toBe( 1, "should be 1 record after rolling back to savepoint." );
 				expect( result.name[1] ).toBe( "Michael Born", "record that should persist after rollback is the one inserted before the savepoint." );
-			})
+			});
+
+			/**
+			 * Adobe: Pre-rollback query is rolled back, post-rollback query is committed.
+			 * Lucee: Pre-rollback query is rolled back, post-rollback query is committed. Same as ACF.
+			 * BoxLang: Pre-rollback query is rolled back, post-rollback query is committed. Same as ACF and Lucee.
+			 */
+			it( "can rollback in middle of transaction", function(){
+				transaction{
+					queryExecute(
+						"INSERT INTO developers ( id, name, role ) VALUES ( :id, :name, :role )",
+						{ id : { value : 77, sqltype : "integer" }, name : "Michael Born", role : "Developer" },
+						{ datasource: variables.testDSN }
+					);
+					transactionRollback();
+					queryExecute(
+						"INSERT INTO developers ( id, name, role ) VALUES ( :id, :name, :role )",
+						{ id : { value : 44, sqltype : "integer" }, name : "Grant Copley", role : "Developer" },
+						{ datasource: variables.testDSN }
+					);
+				}
+				var result = queryExecute(
+					"SELECT * FROM developers WHERE id IN ( 44, 77 )",
+					[],
+					{ datasource: variables.testDSN }
+				);
+
+				expect( result.recordCount ).toBe( 1, "query ran post-rollback should have been committed" );
+				expect( result.name[1] ).toBe( "Grant Copley", "record that should persist after rollback is the one inserted after the rollback." );
+			});
 
 			describe( "nested transactions", function(){
 
@@ -259,7 +288,6 @@ component extends="BaseTest" {
 						}
 					}).toThrow();
 				});
-
 			});
 
 		});
