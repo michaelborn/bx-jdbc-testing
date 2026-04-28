@@ -174,6 +174,58 @@ component extends="BaseTest" {
 
 			});
 
+			describe( "Query meta", function(){
+
+				it( "can cache queries", function(){
+					var result = queryExecute(
+						"SELECT name FROM developers",
+						[],
+						{
+							datasource  : variables.testDSN,
+							cache       : true,
+							cacheTimeout: createTimeSpan( 0, 0, 0, 1 ),
+							result      : "queryMeta"
+						}
+					);
+					debug( queryMeta );
+					var result2 = queryExecute(
+						"SELECT name FROM developers",
+						[],
+						{
+							datasource  : variables.testDSN,
+							cache       : true,
+							cacheTimeout: createTimeSpan( 0, 0, 0, 1 ),
+							result      : "queryMeta2"
+						}
+					);
+					debug( queryMeta2 );
+
+					expect( queryMeta.cached ).toBeFalse();
+					expect( queryMeta2.cached ).toBeTrue();
+					expect( queryMeta.keyExists( "cacheKey" ) ).toBeTrue();
+					expect( queryMeta.cacheKey ).toBe( queryMeta2.cacheKey );
+					expect( queryMeta.keyExists( "cacheTimeout" ) ).toBeTrue();
+					expect( queryMeta.cacheTimeout.toString() ).toBe( "PT1S" );
+				});
+				it( "cacheTimeout matches provided timeout", function(){
+					var result = queryExecute(
+						"SELECT id, name FROM developers",
+						[],
+						{
+							datasource: variables.testDSN,
+							cache: true,
+							cacheTimeout: createTimeSpan( 0, 0, 0, 1 ),
+							result: "queryMeta"
+						}
+					);
+					debug( queryMeta );
+
+					expect( queryMeta.keyExists( "cacheTimeout" ) ).toBeTrue();
+					expect( queryMeta.cacheTimeout.toString() ).toBe( "PT1S" );
+				});
+
+			} );
+
 		});
 
 	}
